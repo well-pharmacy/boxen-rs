@@ -1,9 +1,9 @@
 [workspace]
-members = ["string-width", "boxen-rs-bin"]
+members = ["string-width", "ansi-align", "boxen-rs-bin"]
+resolver = "2"
 
 [workspace.dependencies]
-unicode-width = "0.2.1"
-strip-ansi-escapes = "0.2.1"
-
+unicode-width = "0.1"
+strip-ansi-escapes = "0.2"
 string-width = { path = "string-width" }
-boxen-rs-bin = { path = "boxen-rs-bin" }
+ansi-align = { path = "ansi-align" }

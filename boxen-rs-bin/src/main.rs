@@ -1,4 +1,5 @@
 use string_width::{string_width, widest_line};
+use ansi_align::{left, center, right, ansi_align, Alignment, AlignOptions};
 
 fn main() {
     println!("String Width Demo");
@@ -45,6 +46,48 @@ fn main() {
         println!("{:<35} => {}", description, width);
         println!("  Lines: {:?}", text.lines().collect::<Vec<_>>());
         println!("  Widest line width: {}", width);
+        println!();
+    }
+    
+    println!("\nAnsi Align Demo");
+    println!("===============");
+    
+    let align_tests = vec![
+        ("hello\nworld\nhi", "Basic multi-line text"),
+        ("short\nlonger line\ntiny", "Different length lines"),
+        ("古\n古古古\n古古", "Unicode characters"),
+        ("Line 1\n\u{001B}[1mBold Line\u{001B}[0m\nNormal", "ANSI formatted text"),
+    ];
+    
+    for (text, description) in align_tests {
+        println!("{}", description);
+        println!("Original:");
+        for line in text.lines() {
+            println!("  '{}'", line);
+        }
+        
+        println!("Left aligned:");
+        for line in left(text).lines() {
+            println!("  '{}'", line);
+        }
+        
+        println!("Center aligned:");
+        for line in center(text).lines() {
+            println!("  '{}'", line);
+        }
+        
+        println!("Right aligned:");
+        for line in right(text).lines() {
+            println!("  '{}'", line);
+        }
+        
+        // Custom alignment with different padding
+        let custom_opts = AlignOptions::new(Alignment::Center).pad('.');
+        println!("Center aligned with '.' padding:");
+        for line in ansi_align(text, Some(custom_opts)).lines() {
+            println!("  '{}'", line);
+        }
+        
         println!();
     }
 }

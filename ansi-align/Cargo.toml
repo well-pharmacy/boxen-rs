@@ -1,0 +1,11 @@
+[package]
+name = "ansi-align"
+version = "0.1.0"
+edition = "2024"
+description = "A Rust library for aligning text with support for ANSI escape sequences"
+license = "MIT"
+
+[dependencies]
+string-width = { workspace = true }
+
+[dev-dependencies]
