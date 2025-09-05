@@ -1,4 +1,4 @@
-use string_width::string_width;
+use string_width::{string_width, widest_line};
 
 fn main() {
     println!("String Width Demo");
@@ -26,6 +26,25 @@ fn main() {
         println!("{:<40} => {}", description, width);
         println!("  Text: {:?}", text);
         println!("  Visual width: {}", width);
+        println!();
+    }
+    
+    println!("\nWidest Line Demo");
+    println!("================");
+    
+    let multiline_tests = vec![
+        ("hello\nworld", "Simple two lines"),
+        ("short\nlonger line\nhi", "Three lines of different lengths"),
+        ("古\n古古古", "Unicode characters"),
+        ("Line 1\n\u{001B}[1mBold Line 2\u{001B}[0m\nLine 3", "ANSI formatted line"),
+        ("Mix古ed\nASCII only\n中文测试", "Mixed content"),
+    ];
+    
+    for (text, description) in multiline_tests {
+        let width = widest_line(text);
+        println!("{:<35} => {}", description, width);
+        println!("  Lines: {:?}", text.lines().collect::<Vec<_>>());
+        println!("  Widest line width: {}", width);
         println!();
     }
 }

@@ -31,6 +31,27 @@ pub fn string_width(s: &str) -> usize {
         .sum()
 }
 
+/// Find the width of the widest line in a multi-line string.
+/// 
+/// This function splits the input string by newlines and returns the width
+/// of the line that has the greatest display width.
+/// 
+/// # Examples
+/// 
+/// ```
+/// use string_width::widest_line;
+/// 
+/// assert_eq!(widest_line("hello\nworld"), 5);
+/// assert_eq!(widest_line("short\nlonger line\nhi"), 11);
+/// assert_eq!(widest_line("古\n古古古"), 6);
+/// ```
+pub fn widest_line(s: &str) -> usize {
+    s.lines()
+        .map(string_width)
+        .max()
+        .unwrap_or(0)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -94,5 +115,25 @@ mod tests {
 
         // Simple zero-width joiner test
         assert_eq!(string_width("a\u{200D}b"), 2); // ZWJ between letters has no visual effect
+    }
+
+    #[test]
+    fn test_widest_line() {
+        // Basic multi-line test
+        assert_eq!(widest_line("hello\nworld"), 5);
+        assert_eq!(widest_line("short\nlonger line\nhi"), 11);
+        
+        // Unicode characters
+        assert_eq!(widest_line("古\n古古古"), 6);
+        
+        // Mixed content with ANSI codes
+        assert_eq!(widest_line("hello\n\u{001B}[1mworld\u{001B}[0m\ntest"), 5);
+        
+        // Empty string and single line
+        assert_eq!(widest_line(""), 0);
+        assert_eq!(widest_line("single"), 6);
+        
+        // Lines with different types of content
+        assert_eq!(widest_line("ascii\n古文字\n\u{001B}[32mcolored\u{001B}[0m"), 7);
     }
 }
