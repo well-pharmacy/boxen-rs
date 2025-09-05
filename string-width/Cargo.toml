@@ -1,0 +1,12 @@
+[package]
+name = "string-width"
+version = "0.1.0"
+edition = "2024"
+description = "A Rust library for calculating the display width of strings, handling Unicode and ANSI escape sequences"
+license = "MIT"
+
+[dependencies]
+unicode-width = { workspace = true }
+strip-ansi-escapes = { workspace = true }
+
+[dev-dependencies]
